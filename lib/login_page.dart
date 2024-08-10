@@ -13,7 +13,7 @@ class LoginPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Text(
+          const Text(
             "Salam! Let's sign you in",
             style: TextStyle(
               fontSize: 31,
