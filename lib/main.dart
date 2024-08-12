@@ -17,7 +17,6 @@ class ChatApp extends StatelessWidget {
           primary: const Color.fromARGB(255, 22, 81, 122),
           seedColor: const Color.fromARGB(255, 15, 75, 124),
         ),
-        appBarTheme: AppBarTheme(color: Colors.blue),
         useMaterial3: true,
       ),
       home: ChatPage(),
