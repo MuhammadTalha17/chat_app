@@ -23,7 +23,7 @@ class ChatBubble extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              '$message',
+              message,
               style: const TextStyle(fontSize: 20, color: Colors.white),
             ),
             Image.network(
