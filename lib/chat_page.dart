@@ -3,21 +3,22 @@ import 'package:chat_app/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatelessWidget {
-  const ChatPage({
-    super.key,
-  });
+  const ChatPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userName = ModalRoute.of(context)!.settings.arguments as String;
     return MaterialApp(
         home: SafeArea(
             child: Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 41, 95, 139),
-        title: const Text("Salam!"),
+        foregroundColor: Colors.white,
+        title: Text("Salam! $userName"),
         actions: [
           IconButton(
             onPressed: () {
+              Navigator.pop(context);
               print("Tapped!");
             },
             icon: const Icon(Icons.logout),
@@ -38,7 +39,7 @@ class ChatPage extends StatelessWidget {
               },
             ),
           ),
-          const ChatInput(),
+          ChatInput(),
         ],
       ),
     )));

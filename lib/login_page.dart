@@ -1,3 +1,4 @@
+import 'package:chat_app/chat_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -8,10 +9,12 @@ class LoginPage extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
 
-  void loginUser() {
+  void loginUser(context) {
     if (_formKey.currentContext != null && _formKey.currentState!.validate()) {
       print(usernameController);
       print(passwordController);
+
+      Navigator.pushNamed(context, '/chat', arguments: usernameController.text);
 
       print("Logged in!");
     } else {
@@ -90,7 +93,9 @@ class LoginPage extends StatelessWidget {
                     style: ButtonStyle(
                         backgroundColor:
                             WidgetStateProperty.all(Colors.deepPurple)),
-                    onPressed: loginUser,
+                    onPressed: () {
+                      loginUser(context);
+                    },
                     child: const Text(
                       "Sign in",
                       style: TextStyle(fontSize: 25, color: Colors.white),
