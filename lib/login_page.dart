@@ -1,4 +1,7 @@
 import 'package:chat_app/chat_page.dart';
+import 'package:chat_app/login_textfield.dart';
+import 'package:chat_app/utils/spaces.dart';
+import 'package:chat_app/utils/textfield_styles.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -14,7 +17,8 @@ class LoginPage extends StatelessWidget {
       print(usernameController);
       print(passwordController);
 
-      Navigator.pushNamed(context, '/chat', arguments: usernameController.text);
+      Navigator.pushReplacementNamed(context, '/chat',
+          arguments: usernameController.text);
 
       print("Logged in!");
     } else {
@@ -32,13 +36,15 @@ class LoginPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                "Salam! Let's sign you in",
-                style: TextStyle(
-                  fontSize: 31,
-                  color: Color.fromARGB(255, 15, 105, 63),
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 0.5,
+              const Center(
+                child: Text(
+                  "Salam! Let's sign you in",
+                  style: TextStyle(
+                    fontSize: 31,
+                    color: Color.fromARGB(255, 15, 105, 63),
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 0.5,
+                  ),
                 ),
               ),
               Text(
@@ -57,7 +63,8 @@ class LoginPage extends StatelessWidget {
                 key: _formKey,
                 child: Column(
                   children: [
-                    TextFormField(
+                    LoginTextField(
+                      hintText: "Enter your Username",
                       validator: (value) {
                         if (value != null &&
                             value.isNotEmpty &&
@@ -68,21 +75,12 @@ class LoginPage extends StatelessWidget {
                         }
                       },
                       controller: usernameController,
-                      decoration: const InputDecoration(
-                        hintText: "Username",
-                        border: OutlineInputBorder(),
-                      ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
+                    verticalSpacing(10),
+                    LoginTextField(
                       controller: passwordController,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        hintText: "Password",
-                        border: OutlineInputBorder(),
-                      ),
+                      hintText: "Enter your Password",
+                      isPasswordField: true,
                     ),
                   ],
                 ),
