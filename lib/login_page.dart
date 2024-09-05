@@ -1,5 +1,5 @@
 import 'package:chat_app/chat_page.dart';
-import 'package:chat_app/login_textfield.dart';
+import 'package:chat_app/widgets/login_textfield.dart';
 import 'package:chat_app/utils/spaces.dart';
 import 'package:chat_app/utils/textfield_styles.dart';
 import 'package:flutter/material.dart';
@@ -64,10 +64,17 @@ class LoginPage extends StatelessWidget {
                     color: Colors.amber.shade600,
                     fontWeight: FontWeight.bold),
               ),
-              Image.network(
-                "https://static.vecteezy.com/system/resources/previews/014/664/394/non_2x/chat-bot-symbol-and-logo-icon-vector.jpg",
-                height: 120,
+              verticalSpacing(23),
+              Container(
+                height: 200,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    image: const DecorationImage(
+                        fit: BoxFit.fitWidth,
+                        image: AssetImage('assets/illustration.png')),
+                    borderRadius: BorderRadius.circular(21)),
               ),
+              verticalSpacing(23),
               Form(
                 key: _formKey,
                 child: Column(

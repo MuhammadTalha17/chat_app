@@ -1,9 +1,17 @@
 import 'package:chat_app/models/chat_message_entities.dart';
+import 'package:chat_app/widgets/picker_body.dart';
 import 'package:flutter/material.dart';
 
-class ChatInput extends StatelessWidget {
+class ChatInput extends StatefulWidget {
   final Function(ChatMessageEntity) onSubmit;
-  ChatInput({super.key, required this.onSubmit});
+  const ChatInput({super.key, required this.onSubmit});
+
+  @override
+  State<ChatInput> createState() => _ChatInputState();
+}
+
+class _ChatInputState extends State<ChatInput> {
+  String _selectedImageUrl = '';
 
   final chatMessageController = TextEditingController();
 
@@ -16,13 +24,26 @@ class ChatInput extends StatelessWidget {
         createdAt: DateTime.now().millisecondsSinceEpoch,
         author: Author(userName: "Khan1"));
 
-    onSubmit(newChatMessage);
+    if (_selectedImageUrl.isNotEmpty) {
+      newChatMessage.imageUrl = _selectedImageUrl;
+    }
+
+    widget.onSubmit(newChatMessage);
+    chatMessageController.clear();
+    _selectedImageUrl = '';
+    setState(() {});
+  }
+
+  void onImagePicked(String newImageUrl) {
+    setState(() {
+      _selectedImageUrl = newImageUrl;
+    });
+    Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
       decoration: const BoxDecoration(
           color: Colors.black,
           borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
@@ -30,25 +51,44 @@ class ChatInput extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return NetworkImagePickerBody(
+                    onImageSelected: onImagePicked,
+                  );
+                },
+              );
+            },
             icon: const Icon(
               Icons.add,
               color: Colors.white,
             ),
           ),
           Expanded(
-            child: TextField(
-              keyboardType: TextInputType.multiline,
-              minLines: 1,
-              maxLines: 3,
-              controller: chatMessageController,
-              textCapitalization: TextCapitalization.sentences,
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                hintText: "Type a message...",
-                hintStyle: TextStyle(color: Colors.blueGrey),
-              ),
-              style: const TextStyle(color: Colors.white),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  keyboardType: TextInputType.multiline,
+                  minLines: 1,
+                  maxLines: 3,
+                  controller: chatMessageController,
+                  textCapitalization: TextCapitalization.sentences,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    hintText: "Type a message...",
+                    hintStyle: TextStyle(color: Colors.blueGrey),
+                  ),
+                  style: const TextStyle(color: Colors.white),
+                ),
+                if (_selectedImageUrl.isNotEmpty)
+                  Image.network(
+                    _selectedImageUrl,
+                    height: 50,
+                  )
+              ],
             ),
           ),
           IconButton(
