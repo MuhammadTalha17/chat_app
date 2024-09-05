@@ -1,3 +1,4 @@
+import 'package:chat_app/models/chat_message_entities.dart';
 import 'package:chat_app/widgets/chat_bubble.dart';
 import 'package:chat_app/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,14 @@ class ChatPage extends StatelessWidget {
                     alignment: index % 2 == 0
                         ? Alignment.centerLeft
                         : Alignment.centerRight,
-                    message: "Salam!");
+                    entity: ChatMessageEntity(
+                      id: "1",
+                      author: Author(userName: "Khan17"),
+                      text: "Salam!",
+                      createdAt: DateTime.now().millisecondsSinceEpoch,
+                      imageUrl:
+                          'https://static.vecteezy.com/system/resources/previews/014/664/394/non_2x/chat-bot-symbol-and-logo-icon-vector.jpg',
+                    ));
               },
             ),
           ),

@@ -1,4 +1,4 @@
-import "package:chat_app/utils/textfield_styles.dart";
+import 'package:chat_app/utils/textfield_styles.dart';
 import "package:flutter/material.dart";
 
 class LoginTextField extends StatelessWidget {
@@ -23,7 +23,7 @@ class LoginTextField extends StatelessWidget {
       },
       controller: controller,
       decoration: InputDecoration(
-        hintText: "Username",
+        hintText: hintText,
         hintStyle: ThemeTextStyle.loginTextFieldStyle,
         border: const OutlineInputBorder(),
       ),

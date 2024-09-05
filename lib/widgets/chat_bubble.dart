@@ -1,10 +1,11 @@
+import 'package:chat_app/models/chat_message_entities.dart';
 import 'package:flutter/material.dart';
 
 class ChatBubble extends StatelessWidget {
-  final String message;
+  final ChatMessageEntity entity;
   final Alignment alignment;
 
-  const ChatBubble({super.key, required this.message, required this.alignment});
+  const ChatBubble({super.key, required this.entity, required this.alignment});
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +24,14 @@ class ChatBubble extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              message,
+              entity.text,
               style: const TextStyle(fontSize: 20, color: Colors.white),
             ),
-            Image.network(
-              'https://static.vecteezy.com/system/resources/previews/014/664/394/non_2x/chat-bot-symbol-and-logo-icon-vector.jpg',
-              height: 200,
-            )
+            if (entity.imageUrl != null)
+              Image.network(
+                '${entity.imageUrl}',
+                height: 200,
+              )
           ],
         ),
       ),

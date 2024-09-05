@@ -13,7 +13,6 @@ class ChatApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData(
-          buttonTheme: ButtonThemeData(buttonColor: Colors.amberAccent),
           colorScheme: ColorScheme.fromSeed(
               seedColor: Color.fromARGB(255, 88, 2, 2),
               primary: BrandColor.primaryColor),

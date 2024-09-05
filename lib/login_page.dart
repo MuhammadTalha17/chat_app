@@ -3,6 +3,8 @@ import 'package:chat_app/login_textfield.dart';
 import 'package:chat_app/utils/spaces.dart';
 import 'package:chat_app/utils/textfield_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:social_media_buttons/social_media_buttons.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -23,6 +25,13 @@ class LoginPage extends StatelessWidget {
       print("Logged in!");
     } else {
       print("Login Unsuccessful!");
+    }
+  }
+
+  Future<void> _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
     }
   }
 
@@ -57,7 +66,7 @@ class LoginPage extends StatelessWidget {
               ),
               Image.network(
                 "https://static.vecteezy.com/system/resources/previews/014/664/394/non_2x/chat-bot-symbol-and-logo-icon-vector.jpg",
-                height: 250,
+                height: 120,
               ),
               Form(
                 key: _formKey,
@@ -86,7 +95,7 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 13.0),
+                padding: const EdgeInsets.only(top: 5.0),
                 child: ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor:
@@ -99,6 +108,33 @@ class LoginPage extends StatelessWidget {
                       style: TextStyle(fontSize: 25, color: Colors.white),
                     )),
               ),
+              GestureDetector(
+                onTap: () async {
+                  print("Link Clicked!");
+                  await _launchURL("https://www.google.com");
+                },
+                child: const Center(
+                  child: Text(
+                    "Forgot Password?",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ),
+              ),
+              //Fix this. It's not working
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SocialMediaButton.twitter(
+                    color: Colors.blue,
+                    url: "https://twitter.com",
+                  ),
+                  SocialMediaButton.github(
+                      color: Colors.black54, url: "https://github.com"),
+                ],
+              )
             ],
           ),
         ),
