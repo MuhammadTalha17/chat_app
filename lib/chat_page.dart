@@ -1,10 +1,41 @@
+import 'dart:convert';
+
 import 'package:chat_app/models/chat_message_entities.dart';
 import 'package:chat_app/widgets/chat_bubble.dart';
 import 'package:chat_app/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class ChatPage extends StatelessWidget {
-  const ChatPage({super.key});
+class ChatPage extends StatefulWidget {
+  ChatPage({super.key});
+
+  @override
+  State<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
+  //initial state of messages:
+  List<ChatMessageEntity> _messages = [];
+
+  _loadInitialMessages() async {
+    final response = await rootBundle.loadString('assets/mock_messages.json');
+    final List<dynamic> decodedList = jsonDecode(response) as List;
+    final List<ChatMessageEntity> _chatMessages = decodedList.map((listIem) {
+      return ChatMessageEntity.fromJson(listIem);
+    }).toList();
+
+    print(_chatMessages.length);
+
+    //final state of messages:
+    setState(() {
+      _messages = _chatMessages;
+    });
+  }
+
+  @override
+  void initState() {
+    _loadInitialMessages();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,20 +61,13 @@ class ChatPage extends StatelessWidget {
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: 7,
+              itemCount: _messages.length,
               itemBuilder: (context, index) {
                 return ChatBubble(
-                    alignment: index % 2 == 0
-                        ? Alignment.centerLeft
-                        : Alignment.centerRight,
-                    entity: ChatMessageEntity(
-                      id: "1",
-                      author: Author(userName: "Khan17"),
-                      text: "Salam!",
-                      createdAt: DateTime.now().millisecondsSinceEpoch,
-                      imageUrl:
-                          'https://static.vecteezy.com/system/resources/previews/014/664/394/non_2x/chat-bot-symbol-and-logo-icon-vector.jpg',
-                    ));
+                    alignment: _messages[index].author.userName == "Khan1"
+                        ? Alignment.centerRight
+                        : Alignment.centerLeft,
+                    entity: _messages[index]);
               },
             ),
           ),

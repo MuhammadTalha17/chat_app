@@ -10,6 +10,8 @@ class ChatBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      constraints:
+          BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.5),
       alignment: alignment,
       child: Container(
         margin: const EdgeInsets.all(50),
@@ -30,7 +32,7 @@ class ChatBubble extends StatelessWidget {
             if (entity.imageUrl != null)
               Image.network(
                 '${entity.imageUrl}',
-                height: 200,
+                height: 150,
               )
           ],
         ),
