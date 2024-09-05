@@ -1,4 +1,5 @@
 import 'package:chat_app/chat_page.dart';
+import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/widgets/login_textfield.dart';
 import 'package:chat_app/utils/spaces.dart';
 import 'package:chat_app/utils/textfield_styles.dart';
@@ -14,10 +15,12 @@ class LoginPage extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
 
-  void loginUser(context) {
+  Future<void> loginUser(context) async {
     if (_formKey.currentContext != null && _formKey.currentState!.validate()) {
       print(usernameController);
       print(passwordController);
+
+      await context.read<AuthService>().loginUser(usernameController.text);
 
       Navigator.pushReplacementNamed(context, '/chat',
           arguments: usernameController.text);
@@ -107,8 +110,8 @@ class LoginPage extends StatelessWidget {
                     style: ButtonStyle(
                         backgroundColor:
                             WidgetStateProperty.all(Colors.deepPurple)),
-                    onPressed: () {
-                      loginUser(context);
+                    onPressed: () async {
+                      await loginUser(context);
                     },
                     child: const Text(
                       "Sign in",

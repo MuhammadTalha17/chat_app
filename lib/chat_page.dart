@@ -2,11 +2,13 @@ import 'dart:convert';
 import 'package:chat_app/models/chat_message_entities.dart';
 import 'package:chat_app/models/image_model.dart';
 import 'package:chat_app/repo/image_repository.dart';
+import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/widgets/chat_bubble.dart';
 import 'package:chat_app/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class ChatPage extends StatefulWidget {
   ChatPage({super.key});
@@ -58,6 +60,7 @@ class _ChatPageState extends State<ChatPage> {
         actions: [
           IconButton(
             onPressed: () {
+              context.read<AuthService>().logoutUser();
               Navigator.popAndPushNamed(context, '/');
               print("Tapped!");
             },
@@ -72,7 +75,8 @@ class _ChatPageState extends State<ChatPage> {
               itemCount: _messages.length,
               itemBuilder: (context, index) {
                 return ChatBubble(
-                    alignment: _messages[index].author.userName == "Khan1"
+                    alignment: _messages[index].author.userName ==
+                            context.read<AuthService>().getUserName()
                         ? Alignment.centerRight
                         : Alignment.centerLeft,
                     entity: _messages[index]);

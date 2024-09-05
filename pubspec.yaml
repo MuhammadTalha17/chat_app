@@ -38,11 +38,14 @@ dependencies:
   url_launcher: ^6.3.0
   json_serializer: ^0.2.0
   json_annotation: ^4.0.1
+  provider: ^6.1.2
+  shared_preferences: ^2.3.2
   http: any
   social_media_buttons:
     git:
       url: https://github.com/nrubin29/social_media_buttons
       ref: null-safety
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

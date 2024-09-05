@@ -16,8 +16,8 @@ class NetworkImagePickerBody extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(11),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
-
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(25), topRight: Radius.circular(25)),
       ),
       child: FutureBuilder<List<PixelfordImage>>(
         future: _imageRepo.getNetworkImages(),
@@ -32,14 +32,13 @@ class NetworkImagePickerBody extends StatelessWidget {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onTap: () {
-                    onImageSelected(snapshot.data![index].urlSmallSize)
-                  },
+                    onTap: () {
+                      onImageSelected(snapshot.data![index].urlSmallSize);
+                    },
                     child: Image.network(snapshot.data![index].urlSmallSize));
               },
             );
-          }
-          else if (snapshot.hasError) {
+          } else if (snapshot.hasError) {
             return Padding(
               padding: const EdgeInsets.all(13.0),
               child: Text("There was an error: ${snapshot.error}"),
