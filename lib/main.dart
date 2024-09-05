@@ -5,8 +5,10 @@ import 'package:chat_app/utils/brand_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  runApp(Provider(
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await AuthService.init();
+  runApp(ChangeNotifierProvider(
     create: (BuildContext context) => AuthService(),
     child: ChatApp(),
   ));
@@ -23,7 +25,12 @@ class ChatApp extends StatelessWidget {
           useMaterial3: true,
         ),
         title: "Chat App",
-        home: LoginPage(),
+        home: FutureBuilder<bool>(
+          future: context.read<AuthService>().isLoggedIn(),
+          builder: (context, AsyncSnapshot<bool> snapshot) {
+            return CircularProgressIndicator();
+          },
+        ),
         routes: {
           '/chat': (context) => ChatPage(),
         });

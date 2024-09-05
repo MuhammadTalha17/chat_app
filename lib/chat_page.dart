@@ -49,7 +49,7 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    final userName = ModalRoute.of(context)!.settings.arguments as String;
+    final userName = context.watch<AuthService>().getUserName();
     return MaterialApp(
         home: SafeArea(
             child: Scaffold(
@@ -58,6 +58,12 @@ class _ChatPageState extends State<ChatPage> {
         foregroundColor: Colors.white,
         title: Text("Salam! $userName"),
         actions: [
+          IconButton(
+            onPressed: () {
+              context.read<AuthService>().updateUserName("New Name!");
+            },
+            icon: const Icon(Icons.logout),
+          ),
           IconButton(
             onPressed: () {
               context.read<AuthService>().logoutUser();
